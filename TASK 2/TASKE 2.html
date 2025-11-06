@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Teko:wght@400;600&display=swap" rel="stylesheet">
+<title>watch.it</title>
+<style>
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #231651 0%, #070410 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.site-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    width: 100%;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%);
+    box-shadow: 0 12px 24px rgba(7, 4, 16, 0.4);
+    align-items: center;
+    padding: 16px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.site-header h1 {
+    font-family: 'Teko', sans-serif;
+    font-size: 3.5em;
+    color: #231651;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.site-nav {
+    display: flex;
+    justify-content: center;
+    gap: 56px;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: #231651;
+    font-weight: 700;
+    font-size: 1.1em;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.site-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #4DCCBD;
+    transition: width 0.3s ease;
+}
+
+.site-nav a:hover {
+    color: #4DCCBD;
+}
+
+.site-nav a:hover::after {
+    width: 100%;
+}
+
+.search-btn {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.8em;
+    padding: 10px 24px;
+    border-radius: 20px;
+    border: 2px solid #231651;
+    background: white;
+    color: #231651;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    justify-self: end;
+}
+
+.search-btn:hover {
+    background: #231651;
+    color: #4DCCBD;
+    border: 2px solid #4DCCBD;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(77, 204, 189, 0.3);
+}
+
+/* Main Content Grid */
+.main-grid {
+    width: 90%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-areas: 
+        "feature feature"
+        "single1 single2"
+        "double1 double1"
+        "double2 double2"
+        "double3 double3";
+    grid-gap: 56px;
+    margin: 64px auto;
+    padding-bottom: 64px;
+}
+
+/* Card Styles */
+.card {
+    background: #fff;
+    border: 2px solid #070410;
+    border-radius: 16px;
+    box-shadow: 12px 12px 0 rgba(77, 204, 189, 0.7);
+    display: grid;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 16px 16px 0 rgba(77, 204, 189, 0.9);
+}
+
+.card .img {
+    overflow: hidden;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(60%) contrast(110%);
+    transition: all 0.5s ease;
+}
+
+.card:hover img {
+    filter: brightness(75%) contrast(110%);
+    transform: scale(1.08);
+}
+
+.card .info {
+    padding: 24px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
+}
+
+.card h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: 2.8em;
+    margin-bottom: 12px;
+    color: #231651;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.card p {
+    font-size: 1.15em;
+    line-height: 1.6;
+    color: #333;
+}
+
+.card .btn {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+}
+
+.card button {
+    font-family: 'Teko', sans-serif;
+    padding: 14px 32px;
+    border-radius: 20px;
+    border: 2px solid #231651;
+    background: white;
+    color: #231651;
+    font-size: 1.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: #231651;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 0;
+}
+
+.card button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.card button:hover {
+    color: #4DCCBD;
+    border: 2px solid #4DCCBD;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(77, 204, 189, 0.4);
+}
+
+.card button span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Featured Card */
+.featured {
+    grid-area: feature;
+    grid-template-rows: 450px auto;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 
+        "img img"
+        "info btn";
+}
+
+/* Single Column Card */
+.single-card {
+    display: grid;
+    grid-template-areas:
+        "img"
+        "info"
+        "btn";
+    grid-template-rows: 380px auto auto;
+}
+
+.single-card:nth-child(2) {
+    grid-area: single1;
+}
+
+.single-card:nth-child(3) {
+    grid-area: single2;
+}
+
+/* Double Column Card */
+.double-card {
+    display: grid;
+    grid-template-areas:
+        "img info"
+        "img btn";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+}
+
+.double-card:nth-child(4) {
+    grid-area: double1;
+}
+
+.double-card:nth-child(5) {
+    grid-area: double2;
+}
+
+.double-card:nth-child(6) {
+    grid-area: double3;
+}
+
+.double-card .img {
+    grid-row: 1 / 3;
+}
+
+/* Tablet View (721px to 1024px) */
+@media (min-width: 721px) and (max-width: 1024px) {
+    .main-grid {
+        grid-template-areas:
+            "single1 single2"
+            "double1 double2"
+            "double3 double3";
+        grid-gap: 40px;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .featured {
+        display: none;
+    }
+    
+    .single-card {
+        grid-template-rows: 300px auto auto;
+    }
+    
+    .card h2 {
+        font-size: 2.2em;
+    }
+    
+    .card p {
+        font-size: 1em;
+    }
+}
+
+/* Mobile View (up to 720px) */
+@media (max-width: 720px) {
+    .site-header {
+        grid-template-columns: 1fr auto;
+        padding: 12px 16px;
+    }
+    
+    .site-header h1 {
+        font-size: 2.5em;
+    }
+    
+    .site-nav {
+        display: none;
+    }
+    
+    .search-btn {
+        font-size: 1.5em;
+        padding: 8px 20px;
+    }
+    
+    .main-grid {
+        grid-template-areas:
+            "single1"
+            "single2"
+            "double1"
+            "double2"
+            "double3";
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin: 32px auto;
+    }
+    
+    .featured {
+        display: none;
+    }
+    
+    .single-card {
+        grid-template-rows: 280px auto auto;
+    }
+    
+    .double-card {
+        grid-template-areas:
+            "img"
+            "info"
+            "btn";
+        grid-template-columns: 1fr;
+        grid-template-rows: 280px auto auto;
+    }
+    
+    .double-card .img {
+        grid-row: 1;
+    }
+    
+    .card button {
+        width: 80%;
+        font-size: 1.5em;
+    }
+    
+    .card h2 {
+        font-size: 2.2em;
+    }
+    
+    .card p {
+        font-size: 1em;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <h1>watch.it</h1>
+    <nav class="site-nav">
+        <a href="#">Action</a>
+        <a href="#">Comedy</a>
+        <a href="#">Romance</a>
+        <a href="#">Drama</a>
+    </nav>
+    <button class="search-btn">Search</button>
+</header>
+
+<div class="main-grid">
+    
+    <div class="card featured">
+        <div class="img"><img src="hook.jpg" alt="Hook movie"></div>
+        <div class="info">
+            <h2>Hook (1991)</h2>
+            <p>Rediscover Neverland as grown-up Peter Pan must rescue his kids from Captain Hook. Adventure, magic, and nostalgia!</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+
+    <div class="card single-card">
+        <div class="img"><img src="barbie.jpg" alt="Barbie movie"></div>
+        <div class="info">
+            <h2>Barbie (2023)</h2>
+            <p>Step into Barbie's dazzling journey from doll life to the real world, full of humor, heart, and empowering messages.</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+
+    <div class="card single-card">
+        <div class="img"><img src="la-la-land.jpg" alt="La La Land movie"></div>
+        <div class="info">
+            <h2>La La Land (2016)</h2>
+            <p>Two starry-eyed artists navigate passion and ambition in a world where every moment feels like a cinematic spectacle!</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+
+  
+    <div class="card double-card">
+        <div class="img"><img src="palm-springs.jpg" alt="Palm Springs movie"></div>
+        <div class="info">
+            <h2>Palm Springs (2020)</h2>
+            <p>A never-ending wedding day turns into an unforgettable time-loop romance between two strangers.</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+
+    <div class="card double-card">
+        <div class="img"><img src="hidden-figures.jpg" alt="Hidden Figures movie"></div>
+        <div class="info">
+            <h2>Hidden Figures (2016)</h2>
+            <p>Three unsung NASA heroes defy the odds, proving intelligence and perseverance can change history.</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+
+    <div class="card double-card">
+        <div class="img"><img src="who-framed-roger-rabbit.jpg" alt="Who Framed Roger Rabbit movie"></div>
+        <div class="info">
+            <h2>Who Framed Roger Rabbit (1988)</h2>
+            <p>In a world where cartoons and humans coexist, a detective must solve a zany, high-stakes mystery. Packed with wild humor, groundbreaking animation, and noir twists!</p>
+        </div>
+        <div class="btn"><button><span>Watch Now</span></button></div>
+    </div>
+</div>
+
+</body>
+</html>
